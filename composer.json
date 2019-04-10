@@ -10,11 +10,8 @@
 		}
 	],
 	"require": {
+		"silverstripe/cms": "^4.2",
+        "silverstripe/versioned-admin": "^1.0",
 		"stevie-mayhew/hasoneedit": "^2.0"
-	},
-	"autoload": {
-		"psr-4": {
-            "adair-creative\\BetterLink\\": "src/"
-        }
 	}
 }
