@@ -1,5 +1,6 @@
 {
 	"name": "adair-creative/better-link",
+	"type": "silverstripe-vendormodule",
 	"minimum-stability": "dev",
     "prefer-stable": true,
 	"description": "An easy-to-use link model with more advanced behaviour",
@@ -10,8 +11,6 @@
 		}
 	],
 	"require": {
-		"silverstripe/cms": "^4.2",
-        "silverstripe/versioned-admin": "^1.0",
 		"stevie-mayhew/hasoneedit": "^2.0"
 	}
 }
