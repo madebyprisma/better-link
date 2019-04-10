@@ -1,5 +1,5 @@
 {
-	"name": "Better Link",
+	"name": "adair-creative/better-link",
 	"minimum-stability": "dev",
     "prefer-stable": true,
 	"description": "An easy-to-use link model with more advanced behaviour",
