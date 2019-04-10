@@ -1,0 +1,19 @@
+{
+	"name": "Better Link",
+	"version": "1.0",
+	"description": "An easy-to-use link model with more advanced behaviour",
+	"authors": [
+		{
+			"name": "Jesse Solomon",
+			"email": "jesse@adaircreative.com"
+		}
+	],
+	"require": {
+		"stevie-mayhew/hasoneedit": "^2.0"
+	},
+	"autoload": {
+		"psr-4": {
+            "adair-creative\\BetterLink\\": "src/"
+        }
+	}
+}
