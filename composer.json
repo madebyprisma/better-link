@@ -1,8 +1,5 @@
 {
 	"name": "adair-creative/better-link",
-	"type": "silverstripe-vendormodule",
-	"minimum-stability": "dev",
-    "prefer-stable": true,
 	"description": "An easy-to-use link model with more advanced behaviour",
 	"authors": [
 		{
