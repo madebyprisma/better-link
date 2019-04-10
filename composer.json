@@ -1,6 +1,8 @@
 {
 	"name": "Better Link",
 	"version": "1.0",
+	"minimum-stability": "dev",
+    "prefer-stable": true,
 	"description": "An easy-to-use link model with more advanced behaviour",
 	"authors": [
 		{
