@@ -77,16 +77,20 @@ namespace AdairCreative {
 			}
 		}
 
+		public function getTitle() {
+			return $this->Label;
+		}
+
 		public function Link() {
 			$fields = BetterLink::getFields();
+
+			if ($this->Type == null) return null;
 
 			if ($this->Type >= count($fields)) {
 				throw "Link Type is out of bounds, " . $this->Type . " given, expect up to " . count($fields);
 			}
 			else {
-				if (!key_exists("name", $fields[$this->Type])) return null;
-
-				$prop = $this->obj($fields[$this->Type]["name"]);
+				$prop =  $this->obj(is_array($fields[$this->Type]) && key_exists("name", $fields[$this->Type]) ? $fields[$this->Type]["name"] : $fields[$this->Type]);
 
 				if (method_exists($prop, "getLink")) return $prop->getLink();
 				if (method_exists($prop, "Link")) return $prop->Link();
