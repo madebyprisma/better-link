@@ -7,7 +7,7 @@ Adds a new DataObject to allow for more advanced link behaviour
 ## Installation
 
 ```
-composer require "adair-creative/better-link"
+composer require adair-creative/better-link
 ```
 
 ## Guide
