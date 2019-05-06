@@ -39,10 +39,10 @@ class YourPage extends Page {
 config.yml
 ```yml
 AdairCreative\BetterLink:
-	fields:
-		- name: "ProductToUse"
-		  label: "Product" # Optional
-		  class: "SiteProduct"
+    fields:
+        - name: "ProductToUse"
+          label: "Product" # Optional
+          class: "SiteProduct"
 ```
 
 BetterLinkExtension.php
