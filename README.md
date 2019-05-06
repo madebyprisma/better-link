@@ -6,7 +6,7 @@ Adds a new DataObject to allow for more advanced link behaviour
 
 ## Installation
 
-```
+```bash
 composer require adair-creative/better-link
 ```
 
@@ -14,7 +14,7 @@ composer require adair-creative/better-link
 
 ### Basic
 
-```
+```php
 <?php
 
 use AdairCreative\BetterLink;
@@ -37,7 +37,7 @@ class YourPage extends Page {
 ### Extending
 
 config.yml
-```
+```yml
 AdairCreative\BetterLink:
 	fields:
 		- name: "ProductToUse"
@@ -46,7 +46,7 @@ AdairCreative\BetterLink:
 ```
 
 BetterLinkExtension.php
-```
+```php
 <?php
 
 use SilverStripe\ORM\DataExtension;

@@ -9,11 +9,14 @@ namespace AdairCreative {
     use SilverStripe\Forms\TextField;
     use SilverStripe\Forms\DropdownField;
     use SilverStripe\Core\Config\Configurable;
+    use SilverStripe\Forms\TreeDropdownField;
+    use SilverStripe\Forms\ToggleCompositeField;
 
 	/**
 	 * @property string $Label
 	 * @property int $Type
 	 * @property string $URL
+	 * @property string $Hash
 	 * 
 	 * @method SiteTree Page()
 	 */
@@ -24,7 +27,8 @@ namespace AdairCreative {
 		private static $db = [
 			"Label" => "Varchar(512)",
 			"Type" => "Int",
-			"URL" => "Varchar(512)"
+			"URL" => "Varchar(512)",
+			"Hash" => "Varchar(512)"
 		];
 
 		private static $has_one = [
@@ -56,11 +60,14 @@ namespace AdairCreative {
 					->addExtraClass($link->Type != 0 ? "hidden" : "")
 					->addExtraClass("better-link-" . $name . " field-0"),
 
-				DropdownField::create($name . "-_1_-PageID", "Page")
-					->setSource(SiteTree::get()->map())
+				TreeDropdownField::create($name . "-_1_-PageID", "Page", SiteTree::class)
 					->setEmptyString("Select One")
 					->addExtraClass($link->Type != 1 ? "hidden" : "")
-					->addExtraClass("better-link-" . $name . " field-1")
+					->addExtraClass("better-link-" . $name . " field-1"),
+				
+				ToggleCompositeField::create("URLExtras", "URL Extras", [
+					TextField::create($name . "-_1_-Hash", "Hash")
+				])
 			]);
 
 			$index = 2;
@@ -83,6 +90,7 @@ namespace AdairCreative {
 
 		public function Link() {
 			$fields = BetterLink::getFields();
+			$link = null;
 
 			if ($this->Type == null) return null;
 
@@ -92,12 +100,13 @@ namespace AdairCreative {
 			else {
 				$prop =  $this->obj(is_array($fields[$this->Type]) && key_exists("name", $fields[$this->Type]) ? $fields[$this->Type]["name"] : $fields[$this->Type]);
 
-				if (method_exists($prop, "getLink")) return $prop->getLink();
-				if (method_exists($prop, "Link")) return $prop->Link();
-				if (property_exists($prop, "Link")) return $prop->Link;
-				if (property_exists($prop, "URL")) return $prop->URL;
-				if (method_exists($prop, "forTemplate")) return $prop;
-				return null;
+				if (method_exists($prop, "getLink")) $link = $prop->getLink();
+				if (method_exists($prop, "Link")) $link = $prop->Link();
+				if (property_exists($prop, "Link")) $link = $prop->Link;
+				if (property_exists($prop, "URL")) $link = $prop->URL;
+				if (method_exists($prop, "forTemplate")) $link = $prop;
+				
+				return $link == null ? $link : $link . "#" . urlencode($this->Hash);
 			}
 		}
 	}
