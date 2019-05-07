@@ -106,7 +106,7 @@ namespace AdairCreative {
 				if (property_exists($prop, "URL")) $link = $prop->URL;
 				if (method_exists($prop, "forTemplate")) $link = $prop;
 				
-				return $link == null ? $link : $link . "#" . urlencode($this->Hash);
+				return $link == null ? $link : $link . ($this->Hash ? "#" . urlencode($this->Hash) : "");
 			}
 		}
 	}
