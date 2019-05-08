@@ -57,7 +57,9 @@ namespace AdairCreative {
 			$arr = explode(",", $this->Queries);
 			$index = 0;
 			foreach ($arr as $query) {
-				$output .= "?" . $query . ($index < count($arr) - 1 ? "&" : "");
+				$str = trim($query);
+				if (strlen($str) == 0) continue;
+				$output .= "?" . $str . ($index < count($arr) - 1 ? "&" : "");
 				$index++;
 			}
 
@@ -125,7 +127,7 @@ namespace AdairCreative {
 				if (property_exists($prop, "URL")) $link = $prop->URL;
 				if (method_exists($prop, "forTemplate")) $link = $prop;
 				
-				return $link == null ? $link : $link . (substr($this->Extension, 0, 1) == "/" ? $this->Extension : "/" . $this->Extension) . $this->getFormattedQueries() . ($this->Hash ? "#" . urlencode($this->Hash) : "");
+				return $link == null ? $link : $link . (substr($this->Extension, 0, 1) != "/" ? $this->Extension : str_replace("/", $this->Extension, 1)) . $this->getFormattedQueries() . ($this->Hash ? "#" . urlencode($this->Hash) : "");
 			}
 		}
 	}
