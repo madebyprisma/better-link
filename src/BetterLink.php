@@ -17,6 +17,8 @@ namespace AdairCreative {
 	 * @property int $Type
 	 * @property string $URL
 	 * @property string $Hash
+	 * @property string $Extension
+	 * @property string $Queries
 	 * 
 	 * @method SiteTree Page()
 	 */
@@ -28,7 +30,9 @@ namespace AdairCreative {
 			"Label" => "Varchar(512)",
 			"Type" => "Int",
 			"URL" => "Varchar(512)",
-			"Hash" => "Varchar(512)"
+			"Hash" => "Varchar(512)",
+			"Extension" => "Varchar(512)",
+			"Queries" => "Varchar(512)"
 		];
 
 		private static $has_one = [
@@ -45,6 +49,19 @@ namespace AdairCreative {
 
 		private static function getSelectJS(string $name) {
 			return "jQuery(\".better-link-" . $name . "\").addClass(\"hidden\");jQuery(\".better-link-" . $name . ".field-\" + this.value).removeClass(\"hidden\")";
+		}
+
+		private function getFormattedQueries() {
+			$output = "";
+
+			$arr = explode(",", $this->Queries);
+			$index = 0;
+			foreach ($arr as $query) {
+				$output .= "?" . $query . ($index < count($arr) - 1 ? "&" : "");
+				$index++;
+			}
+
+			return $output;
 		}
 
 		public static function addFields(string $name, BetterLink $link, FieldList &$fields, string $label = "Link Options") {
@@ -66,6 +83,8 @@ namespace AdairCreative {
 					->addExtraClass("better-link-" . $name . " field-1"),
 				
 				ToggleCompositeField::create("URLExtras", "URL Extras", [
+					TextField::create($name . "-_1_-Extension", "Segment Extension"),
+					TextField::create($name . "-_1_-Queries", "Queries ({Name}={Value},{etc.})"),
 					TextField::create($name . "-_1_-Hash", "Hash")
 				])
 			]);
@@ -106,7 +125,7 @@ namespace AdairCreative {
 				if (property_exists($prop, "URL")) $link = $prop->URL;
 				if (method_exists($prop, "forTemplate")) $link = $prop;
 				
-				return $link == null ? $link : $link . ($this->Hash ? "#" . urlencode($this->Hash) : "");
+				return $link == null ? $link : $link . (substr($this->Extension, 0, 1) == "/" ? $this->Extension : "/" . $this->Extension) . $this->getFormattedQueries() . ($this->Hash ? "#" . urlencode($this->Hash) : "");
 			}
 		}
 	}
