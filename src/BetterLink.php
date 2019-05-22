@@ -105,6 +105,21 @@ namespace AdairCreative {
 			}
 		}
 
+		public function getAlt() {
+			$fields = BetterLink::getFields();
+			$alt = "";
+			$prop =  $this->obj(is_array($fields[$this->Type]) && key_exists("name", $fields[$this->Type]) ? $fields[$this->Type]["name"] : $fields[$this->Type]);
+
+			if (method_exists($prop, "getTitle")) $alt = $prop->getTitle();
+			else if (method_exists($prop, "Title")) $alt = $prop->Title();
+			else if (property_exists($prop, "Title")) $alt = $prop->Title;
+			else if (property_exists($prop, "Label")) $alt = $prop->Label;
+			else if (method_exists($prop, "getLabel")) $alt = $prop->getLabel();
+			else if (method_exists($prop, "Label")) $alt = $prop->Lable();
+
+			return $alt;
+		}
+
 		public function getTitle() {
 			return $this->Label;
 		}
@@ -122,10 +137,10 @@ namespace AdairCreative {
 				$prop =  $this->obj(is_array($fields[$this->Type]) && key_exists("name", $fields[$this->Type]) ? $fields[$this->Type]["name"] : $fields[$this->Type]);
 
 				if (method_exists($prop, "getLink")) $link = $prop->getLink();
-				if (method_exists($prop, "Link")) $link = $prop->Link();
-				if (property_exists($prop, "Link")) $link = $prop->Link;
-				if (property_exists($prop, "URL")) $link = $prop->URL;
-				if (method_exists($prop, "forTemplate")) $link = $prop;
+				else if (method_exists($prop, "Link")) $link = $prop->Link();
+				else if (property_exists($prop, "Link")) $link = $prop->Link;
+				else if (property_exists($prop, "URL")) $link = $prop->URL;
+				else if (method_exists($prop, "forTemplate")) $link = $prop;
 				
 				return $link == null ? $link : $link . (substr($this->Extension, 0, 1) != "/" ? $this->Extension : str_replace("/", $this->Extension, 1)) . $this->getFormattedQueries() . ($this->Hash ? "#" . urlencode($this->Hash) : "");
 			}
