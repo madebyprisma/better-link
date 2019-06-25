@@ -108,6 +108,11 @@ namespace AdairCreative {
 		public function getAlt() {
 			$fields = BetterLink::getFields();
 			$alt = "";
+
+			if (!key_exists($this->Typen, $fields)) {
+				return "";
+			}
+
 			$prop =  $this->obj(is_array($fields[$this->Type]) && key_exists("name", $fields[$this->Type]) ? $fields[$this->Type]["name"] : $fields[$this->Type]);
 
 			if (method_exists($prop, "getTitle")) $alt = $prop->getTitle();
