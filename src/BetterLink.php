@@ -133,7 +133,7 @@ namespace AdairCreative {
 			$fields = BetterLink::getFields();
 			$link = null;
 
-			if ($this->Type == null) return null;
+			if ($this->Type === null) return null;
 
 			if ($this->Type >= count($fields)) {
 				throw "Link Type is out of bounds, " . $this->Type . " given, expect up to " . count($fields);
