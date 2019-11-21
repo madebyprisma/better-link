@@ -66,9 +66,9 @@ namespace AdairCreative {
 			return $output;
 		}
 
-		public static function addFields(string $name, BetterLink $link, FieldList &$fields, string $label = "Link Options") {
+		public static function addFields(string $name, BetterLink $link, FieldList &$fields, string $label = "Link Options", string $tabName = "Root.Main") {
 			$fields->removeByName($name . "ID");
-			$fields->addFieldsToTab("Root.Main", [
+			$fields->addFieldsToTab($tabName, [
 				HeaderField::create("", $label),
 				TextField::create($name . "-_1_-Label", "Label"),
 				DropdownField::create($name . "-_1_-Type", "Type")
