@@ -109,7 +109,7 @@ namespace AdairCreative {
 			$fields = BetterLink::getFields();
 			$alt = "";
 
-			if (!key_exists($this->Typen, $fields)) {
+			if (!key_exists($this->Type, $fields)) {
 				return "";
 			}
 
