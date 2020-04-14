@@ -39,6 +39,10 @@ namespace AdairCreative {
 			"Page" => SiteTree::class
 		];
 
+		private static $translate = [
+			"Label"
+		];
+
 		private static function getConfig_fields() {
 			return Config::inst()->exists(BetterLink::class, 'fields') ? Config::inst()->get(BetterLink::class, "fields") : [];
 		}
