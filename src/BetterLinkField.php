@@ -5,6 +5,8 @@ namespace MadeByPrisma\BetterLink;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\LabelField;
+use SilverStripe\Forms\LiteralField;
 use SilverStripe\Forms\TextareaField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\ToggleCompositeField;
@@ -12,11 +14,13 @@ use SilverStripe\Forms\TreeDropdownField;
 
 class BetterLinkField extends CompositeField {
 	private static function getSelectJS(string $name) {
-		return "jQuery(\".better-link-" . $name . "\").addClass(\"hidden\");jQuery(\".better-link-" . $name . ".field-\" + this.value).removeClass(\"hidden\")";
+		return "jQuery(\".better-link-$name\").addClass(\"hidden\");jQuery(\".better-link-$name.field-\" + this.value).removeClass(\"hidden\")";
 	}
 
 	public function __construct(string $name, ?string $title = null) {
 		$children = [
+			new LabelField("{$name}:_Label", $title ?: $name),
+
 			new TextField("{$name}:Label", "Label"),
 			
 			(new DropdownField("{$name}:Type", "Type", [
@@ -34,7 +38,9 @@ class BetterLinkField extends CompositeField {
 			new ToggleCompositeField("{$name}:Advanced", "Advanced", [
 				new TextField("{$name}:Hash", "Hash"),
 				new TextareaField("{$name}:Queries", "Queries")
-			])
+			]),
+
+			new LiteralField("{$name}:_JS", "<script>" . self::getSelectJS($name) . "</script>")
 		];
 
 		parent::__construct($children);
