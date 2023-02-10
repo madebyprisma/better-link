@@ -7,7 +7,7 @@ Adds a new DataObject to allow for more advanced link behaviour
 ## Installation
 
 ```bash
-composer require adair-creative/better-link
+composer require madebyprisma/better-link
 ```
 
 ## Guide
@@ -27,33 +27,19 @@ class YourPage extends Page {
 	public function getCMSFields() {
 		$fields = parent::getCMSFields();
 		
-		BetterLink::addFields($fields);
+		$fields->addFieldsToTab("Root.Main", [
+			BetterLinkField::create("YourLink", "Your Link")
+		]);
 
 		return $fields;
 	}
 }
 ```
 
-### Extending
+## Upgrading
 
-config.yml
-```yml
-AdairCreative\BetterLink:
-    fields:
-        - name: "ProductToUse"
-          label: "Product" # Optional
-          class: "SiteProduct"
-```
+This package was previously `adair-creative/better-link` and is no longer supported.
 
-BetterLinkExtension.php
-```php
-<?php
+This new package is not compatible with the old one, so you will need to update your code, and rebuild the links.
 
-use SilverStripe\ORM\DataExtension;
-
-class BetterLinkExtension extends DataExtension {
-	private static $has_one = [
-		"ProductToUse" => SiteProduct::class
-	];
-}
-```
+Versions are denoted by the SilverStripe version they are compatible with. (i.e. 4.12.x is compatible with SilverStripe 4.12)
