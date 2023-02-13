@@ -5,46 +5,39 @@ namespace MadeByPrisma\BetterLink;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\HeaderField;
 use SilverStripe\Forms\LabelField;
-use SilverStripe\Forms\LiteralField;
 use SilverStripe\Forms\TextareaField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\ToggleCompositeField;
 use SilverStripe\Forms\TreeDropdownField;
+use UncleCheese\DisplayLogic\Forms\Wrapper;
 
 class BetterLinkField extends CompositeField {
-	private static function getSelectJS(string $name) {
-		return "jQuery(\".better-link-$name\").addClass(\"hidden\");jQuery(\".better-link-$name.field-\" + this.value).removeClass(\"hidden\")";
-	}
-
 	public function __construct(string $name, ?string $title = null) {
 		$children = [
-			new LabelField("{$name}:_Label", $title ?: $name),
-
-			new TextField("{$name}:Label", "Label"),
+			new TextField("{$name}-_1_-Label", "Label"),
 			
-			(new DropdownField("{$name}:Type", "Type", [
+			(new DropdownField("{$name}-_1_-Type", "Type", [
 				"Page" => "Page",
 				"URL" => "URL"
-			]))
-			->setAttribute("onchange", self::getSelectJS($name)),
+			])),
 
-			(new TextField("{$name}:URL", "URL"))
-			->addExtraClass("better-link-" . $name . " field-URL"),
+			$urlField = new TextField("{$name}-_1_-URL", "URL"),
 
-			(new TreeDropdownField("{$name}:PageID", "Page", SiteTree::class))
-			->addExtraClass("better-link-" . $name . " field-Page"),
+			$pageField = new Wrapper(new TreeDropdownField("{$name}-_1_-PageID", "Page", SiteTree::class)),
 			
-			new ToggleCompositeField("{$name}:Advanced", "Advanced", [
-				new TextField("{$name}:Hash", "Hash"),
-				new TextareaField("{$name}:Queries", "Queries")
+			new ToggleCompositeField("{$name}-_1_-Advanced", "Advanced", [
+				new TextField("{$name}-_1_-Hash", "Hash"),
+				new TextareaField("{$name}-_1_-Queries", "Queries")
 			]),
-
-			new LiteralField("{$name}:_JS", "<script>" . self::getSelectJS($name) . "</script>")
 		];
 
 		parent::__construct($children);
+		$this->setTitle($title ?? $name);
 		$this->setName($name);
-		$this->setTitle($title);
+
+		$urlField->hideUnless("{$name}-_1_-Type")->isEqualTo("URL");
+		$pageField->hideUnless("{$name}-_1_-Type")->isEqualTo("Page");
 	}
 }

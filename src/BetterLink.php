@@ -44,7 +44,7 @@ class BetterLink extends DataObject {
 
 	private function getFormattedQueries() {
 		$output = [];
-		$queries = explode(",", $this->Queries);
+		$queries = explode(",", $this->Queries ?: "");
 
 		foreach ($queries as $query) {
 			$exploded = explode("=", trim($query));
