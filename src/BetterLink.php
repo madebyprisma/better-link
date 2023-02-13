@@ -32,8 +32,8 @@ class BetterLink extends DataObject {
 	private static $table_name = "MadeByPrisma_BetterLink";
 	private static $db = [
 		"Label" => "Varchar(256)",
-		"Type" => "Varchar(128)",
-		"URL" => "Enum('Page, URL', 'Page')",
+		"Type" => "Enum('Page, URL', 'Page')",
+		"URL" => "Varchar(256)",
 		"Hash" => "Varchar(256)",
 		"Queries" => "Varchar(512)"
 	];
