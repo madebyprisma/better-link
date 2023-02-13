@@ -17,7 +17,8 @@ composer require madebyprisma/better-link
 ```php
 <?php
 
-use AdairCreative\BetterLink;
+use MadeByPrisma\BetterLink\BetterLink;
+use MadeByPrisma\BetterLink\BetterLinkField;
 
 class YourPage extends Page {
 	private static $has_one = [
