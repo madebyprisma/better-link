@@ -29,7 +29,11 @@ class BetterLinkField extends CompositeField {
 			
 			new ToggleCompositeField("{$name}-_1_-Advanced", "Advanced", [
 				new TextField("{$name}-_1_-Hash", "Hash"),
-				new TextareaField("{$name}-_1_-Queries", "Queries")
+				new TextareaField("{$name}-_1_-Queries", "Queries"),
+				new DropdownField("{$name}-_1_-Target", "Target", [
+					"" => "Same window",
+					"_blank" => "New window"
+				])
 			]),
 		];
 

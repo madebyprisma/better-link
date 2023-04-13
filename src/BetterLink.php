@@ -35,7 +35,8 @@ class BetterLink extends DataObject {
 		"Type" => "Enum('Page, URL', 'Page')",
 		"URL" => "Varchar(256)",
 		"Hash" => "Varchar(256)",
-		"Queries" => "Varchar(512)"
+		"Queries" => "Varchar(512)",
+		"Target" => "Varchar(32)"
 	];
 
 	private static $has_one = [
@@ -80,6 +81,10 @@ class BetterLink extends DataObject {
 		}
 
 		return $path . $this->getFormattedQueries() . $this->getFormattedHash();
+	}
+
+	public function getTargetAttribute() {
+		return $this->Target ? "target=\"{$this->Target}\"" : "";
 	}
 
 	public function forTemplate() {
